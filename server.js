@@ -10,6 +10,7 @@ dotenv.config()
 connectDB()
 
 
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
