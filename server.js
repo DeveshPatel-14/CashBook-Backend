@@ -20,6 +20,10 @@ const app = express()
 app.use(cors(corsOptions))
 app.use(express.json())
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    next();
+  });
 
 // Available routes
 app.use('/api/users', userRoutes)
