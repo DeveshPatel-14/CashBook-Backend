@@ -9,21 +9,26 @@ import path from 'path'
 dotenv.config()
 connectDB()
 
-const corsOptions ={
-    origin:'*', 
-    credentials:true,            //access-control-allow-credentials:true
-    methods: ["GET", "POST", "PUT", "DELETE"],
- };
- 
+
 
 const app = express();
-app.use(cors(corsOptions));
+
+app.use(function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
+
 app.use(express.json());
 
-// app.use((req, res, next) => {
-//     res.header('Access-Control-Allow-Origin', '*');
-//     next();
-//   });
+const root = path.join(__dirname, 'frontend', 'build')
+app.use(express.static(root))
+
+app.get('*', (req, res) => {
+  res.sendFile('index.html', { root })
+})
 
 // Available routes
 app.use('/api/users', userRoutes)
