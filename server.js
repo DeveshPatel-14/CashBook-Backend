@@ -12,7 +12,7 @@ connectDB()
 const corsOptions ={
     origin:'*', 
     credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200,
+    methods: ["GET", "POST", "PUT", "DELETE"],
  }
  
 
@@ -20,10 +20,10 @@ const app = express()
 app.use(cors(corsOptions))
 app.use(express.json())
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    next();
-  });
+// app.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', '*');
+//     next();
+//   });
 
 // Available routes
 app.use('/api/users', userRoutes)
